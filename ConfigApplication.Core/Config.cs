@@ -30,6 +30,7 @@ namespace ConfigApplication
                 }
             }
             */
+            LoadConfig(filePath);
             
             foreach(var pair in data)
             {

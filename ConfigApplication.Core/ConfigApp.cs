@@ -7,12 +7,14 @@ namespace ConfigApplication
     public class ConfigApp
     {
         public IConfig _config;
-        
+
         public ConfigApp(IConfig config)
         {
             _config = config;
         }
 
+        //private AppConfig _appconfig = _config.LoadConfig("Config.json");
+        
         public void Run()
         {
             string _filePath = "Config.json";
@@ -34,12 +36,12 @@ namespace ConfigApplication
             
             Console.Write("Choice: ");
             var choice = Convert.ToInt32(Console.ReadLine());
-
+            
             if (choice.Equals(1))
             {
                 AppConfig appConfig = _config.LoadConfig(_filePath);
                 
-                foreach (var item in )
+                foreach (var item in appConfig.data)
                 {
                     Console.WriteLine($"{item.Key}: {item.Value}");
                 }
