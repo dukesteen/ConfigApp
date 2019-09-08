@@ -39,9 +39,9 @@ namespace ConfigApplication
             
             if (choice.Equals(1))
             {
-                AppConfig appConfig = _config.LoadConfig(_filePath);
+                Dictionary<string, string> config = _config.LoadConfig(_filePath).data;
                 
-                foreach (var item in appConfig.data)
+                foreach (var item in config)
                 {
                     Console.WriteLine($"{item.Key}: {item.Value}");
                 }

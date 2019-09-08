@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 
 namespace ConfigApplication
@@ -30,8 +30,7 @@ namespace ConfigApplication
                 }
             }
             */
-            LoadConfig(filePath);
-            
+
             foreach(var pair in data)
             {
                 if(!config.data.ContainsKey(pair.Key))
