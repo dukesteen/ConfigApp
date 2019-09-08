@@ -1,42 +1,46 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 
 namespace ConfigApplication
 {
     public class Config : IConfig
     {
+        public AppConfig appConfig;
         public AppConfig LoadConfig(string filePath)
         {
             string json = File.ReadAllText(filePath);
-            AppConfig convertedJson = JsonConvert.DeserializeObject<AppConfig>(json);
-            return convertedJson;
+            appConfig = JsonConvert.DeserializeObject<AppConfig>(json);
+            return appConfig;
         }
         
-        public void EditConfig(string filePath, Dictionary<string, string> data)
+        public AppConfig EditConfig(string filePath, Dictionary<string, string> data, AppConfig config)
         {
-            if (data.ContainsKey("name"))
+            /*
+            foreach (KeyValuePair<string, string> item in config.data)
             {
-                string json = File.ReadAllText(filePath);
-                AppConfig deserializedJson = JsonConvert.DeserializeObject<AppConfig>(json);
-                data.Add("surname", deserializedJson.Surname);
-                var convertedJson = JsonConvert.SerializeObject(data);
-                File.WriteAllText(filePath, convertedJson.ToString());
+                foreach (KeyValuePair<string, string> item2 in data)
+                {
+                    if (item.Key == item2.Key)
+                    {
+                        config.data[item.Value] = item2.Value;
+                    }
+                }
             }
-            else if (data.ContainsKey("surname"))
+            */
+            
+            foreach(var pair in data)
             {
-                string json = File.ReadAllText(filePath);
-                AppConfig deserializedJson = JsonConvert.DeserializeObject<AppConfig>(json);
-                data.Add("name", deserializedJson.Name);
-                var convertedJson = JsonConvert.SerializeObject(data);
-                File.WriteAllText(filePath, convertedJson.ToString());
+                if(!config.data.ContainsKey(pair.Key))
+                    config.data.Add(pair.Key, pair.Value);
+                else
+                    config.data[pair.Key] = pair.Value;
             }
+            
+            appConfig = JsonConvert.DeserializeObject<AppConfig>(data.ToString());
+            return appConfig;
         }
-    }
-
-    public class AppConfig
-    {
-        public string Name { get; set; }
-        public string Surname { get; set; }
     }
 }
