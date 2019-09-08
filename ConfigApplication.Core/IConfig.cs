@@ -4,7 +4,9 @@ namespace ConfigApplication
 {
     public interface IConfig
     {
-        AppConfig LoadConfig(string filePath);
-        AppConfig EditConfig(string filePath, Dictionary<string, string> data, AppConfig config);
+        AppConfig appConfig { get; set; }
+        void SaveConfig();
+        void AddPair(KeyValuePair<string, string> data);
+        void EditPair(KeyValuePair<string, string> data);
     }
 }

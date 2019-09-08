@@ -8,39 +8,41 @@ namespace ConfigApplication
 {
     public class Config : IConfig
     {
-        public AppConfig appConfig;
-        public AppConfig LoadConfig(string filePath)
+        public AppConfig appConfig { get; set; }
+        
+        public Config()
         {
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(Constants.configFile);
             appConfig = JsonConvert.DeserializeObject<AppConfig>(json);
-            return appConfig;
+        }
+
+        public void SaveConfig()
+        {
+            string json = JsonConvert.SerializeObject(appConfig);
+            File.WriteAllText(Constants.configFile, json);
         }
         
-        public AppConfig EditConfig(string filePath, Dictionary<string, string> data, AppConfig config)
+        public void AddPair(KeyValuePair<string, string> data)
         {
-            /*
-            foreach (KeyValuePair<string, string> item in config.data)
+            if (appConfig.data.ContainsKey(data.Key))
             {
-                foreach (KeyValuePair<string, string> item2 in data)
-                {
-                    if (item.Key == item2.Key)
-                    {
-                        config.data[item.Value] = item2.Value;
-                    }
-                }
+                EditPair(data);
             }
-            */
-
-            foreach(var pair in data)
+            else
             {
-                if(!config.data.ContainsKey(pair.Key))
-                    config.data.Add(pair.Key, pair.Value);
-                else
-                    config.data[pair.Key] = pair.Value;
+                appConfig.data.Add(data.Key, data.Value);
             }
-            
-            appConfig = JsonConvert.DeserializeObject<AppConfig>(data.ToString());
-            return appConfig;
+            SaveConfig();
         }
+
+        public void EditPair(KeyValuePair<string, string> data)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+
+
+
     }
 }

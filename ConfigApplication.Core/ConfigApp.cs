@@ -13,11 +13,9 @@ namespace ConfigApplication
             _config = config;
         }
 
-        //private AppConfig _appconfig = _config.LoadConfig("Config.json");
-        
         public void Run()
         {
-            string _filePath = "Config.json";
+
             Console.WriteLine("What would you like to do today?");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("[1] ");
@@ -39,7 +37,7 @@ namespace ConfigApplication
             
             if (choice.Equals(1))
             {
-                Dictionary<string, string> config = _config.LoadConfig(_filePath).data;
+                Dictionary<string, string> config = _config.appConfig.data;
                 
                 foreach (var item in config)
                 {
@@ -48,20 +46,35 @@ namespace ConfigApplication
             }
             else if (choice.Equals((2)))
             {
-                Console.Clear();
-                Console.Write("Key: ");
-                var key = Console.ReadLine();
-                Console.Write("\n");
+                var userInput = 0;
+                while (userInput == 0)
+                {
+                    Console.Clear();
+                    Console.Write("Key: ");
+                    var key = Console.ReadLine();
+                    Console.Write("\n");
                 
-                Console.Write("Value: ");
-                var value = Console.ReadLine();
-                Console.Write("\n");
-                
-                Dictionary<string, string> data = new Dictionary<string, string>();
-                data.Add(key, value);
-                
-                IConfig config = new Config();
-                config.EditConfig(_filePath, data, InversionOfControl.Kernel.Get<Config>().appConfig);
+                    Console.Write("Value: ");
+                    var value = Console.ReadLine();
+                    Console.Write("\n");
+
+                    KeyValuePair<string, string> data = new KeyValuePair<string, string>(key, value);
+                    _config.AddPair(data);
+                    Console.WriteLine("Pair added!");
+                    Console.Write("Would you like to add another pair? (Y/N): ");
+                    var userChoice = Console.ReadLine();
+                    
+                    if (userChoice.Equals("Y"))
+                    {
+                        userInput = 0;
+                        continue;
+                    }
+                    else
+                    {
+                        userInput = 1;
+                        break;
+                    }
+                }
             }
             else if (choice.Equals(3))
             {
