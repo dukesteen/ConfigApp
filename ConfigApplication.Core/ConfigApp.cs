@@ -6,7 +6,7 @@ namespace ConfigApplication
 {
     public class ConfigApp
     {
-        public IConfig _config;
+        private readonly IConfig _config;
 
         public ConfigApp(IConfig config)
         {

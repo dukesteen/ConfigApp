@@ -15,7 +15,7 @@ namespace ConfigApplication
         }
 
         private static void InitializeKernel()
-            => _kernel = new StandardKernel(new InjectionModule());
+            => _kernel = new KernelConfiguration(new InjectionModule()).BuildReadonlyKernel();
     }
 
     internal class InjectionModule : NinjectModule
