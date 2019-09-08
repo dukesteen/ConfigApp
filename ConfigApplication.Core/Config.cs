@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace ConfigApplication
@@ -36,7 +37,7 @@ namespace ConfigApplication
 
         public void EditPair(KeyValuePair<string, string> data)
         {
-            throw new NotImplementedException();
+            appConfig.data[data.Key] = data.Value;
         }
 
         
